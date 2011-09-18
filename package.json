@@ -1,0 +1,17 @@
+{
+  "name": "node-sharedcanvas",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.4.2"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "author": "Dominique Hazaël-Massieux <dom@w3.org> (http://www.w3.org/People/Dom/)",
+  "description": "Prototype of touch-enabled canvas that replays drawing on another page",
+  "repository": {
+    "url": ""
+  },
+  "main": "apps.js"
+}

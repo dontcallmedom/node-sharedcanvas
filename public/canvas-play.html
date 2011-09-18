@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head><title>Canvas Drawer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body>
+<canvas id="example" width="800" height="480"></canvas>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+   
+    
+   <script>
+     var canvas = document.getElementById('example'),
+     ctxt = canvas.getContext("2d");
+     var eventsource=  new EventSource('/stream');
+     eventsource.onmessage = function(event) {
+       ctxt.beginPath();
+       pathData = JSON.parse(event.data);
+     ctxt.moveTo(pathData.from.x, pathData.from.y);
+     ctxt.lineTo(pathData.to.x, pathData.to.y);
+     ctxt.stroke();
+     ctxt.closePath();
+     };
+     eventsource.addEventListener("clear", function() {  ctxt.clearRect(0, 0, 800, 480);}, false);
+</script>
+
+</body></html>
