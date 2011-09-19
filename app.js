@@ -2,6 +2,7 @@ var express = require('express');
 var EventEmitter = require('events').EventEmitter;
 var emitter = new EventEmitter();
 var app = express.createServer();
+var fs = require('fs');
 
 app.configure(function(){
   emitter.setMaxListeners(0);
@@ -29,6 +30,11 @@ app.post('/clear', function(req, res){
     res.end();
 });
 
+app.get('/', function(req, res) {
+    fs.readFile(__dirname + '/public/index.html', 'utf8', function(err, text){
+        response.send(text);
+    });
+});
 
 // broadcast received draw/clear events
 app.get('/stream', function(req, res) {
