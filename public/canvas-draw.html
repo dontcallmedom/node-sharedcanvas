@@ -36,10 +36,10 @@
                var self = {
                    //bind click events
                    init: function() {
-                       //set pX and pY from first click
                        
                        canvas.addEventListener('touchstart', self.preDraw, false);
                        canvas.addEventListener('touchmove', self.draw, false);
+	               return self;
                        
                        
                    },
@@ -84,11 +84,17 @@
                        ctxt.closePath();
 	               $.post('/draw', {'from': {x: lines[i].x, y: lines[i].y}, 'to': {x: lines[i].x + changeX, y: lines[i].y + changeY}});
                        return { x: lines[i].x + changeX, y: lines[i].y + changeY };
-                   }
+                   },
+	           clear: function() {
+	               ctxt.clearRect(0, 0, 800, 480);
+               	       $.post('/clear');
+	           }
                };
 
                return self.init();
            };
+           $(function(){
+             var super_awesome_multitouch_drawing_canvas_thingy = new CanvasDrawr({id:"example", size: 5 }); 
 	   // Clear on shake
 	   // adapted from http://www.jeffreyharrell.com/blog/2010/11/creating-a-shake-event-in-mobile-safari/
 	   if (typeof window.DeviceMotionEvent != undefined) {
@@ -112,8 +118,7 @@
 					var change = Math.abs(x1 - x2 + y1 - y2 + z1 - z2);
 		
 					if (change > sensitivity) {
-	   ctxt.clearRect(0, 0, 800, 480);
-	   $.post('/clear');
+super_awesome_multitouch_drawing_canvas_thingy.clear();
 					}
 }
 					// Update new position
@@ -122,9 +127,6 @@
 					z2 = z1;
 				}, 150);
 	   }	
-
-           $(function(){
-             var super_awesome_multitouch_drawing_canvas_thingy = new CanvasDrawr({id:"example", size: 5 }); 
 
            });
 </script></body>
