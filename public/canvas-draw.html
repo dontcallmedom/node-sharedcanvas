@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 </head>
 <body>
+<button id='clear'>Clear</button>
 <canvas id="example" width="800" height="480"></canvas>
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
    
@@ -127,6 +128,10 @@ super_awesome_multitouch_drawing_canvas_thingy.clear();
 					z2 = z1;
 				}, 150);
 	   }	
+document.getElementById('clear').addEventListener('click', function() {
+super_awesome_multitouch_drawing_canvas_thingy.clear();
+return true;
+}, false);
 
            });
 </script></body>
