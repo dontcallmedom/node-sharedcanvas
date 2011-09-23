@@ -25,7 +25,7 @@
      ctxt.closePath();
 }
      };
-     eventsource.addEventListener("clear", function() {  if (event.origin == eventsourceOrigin) { ctxt.clearRect(0, 0, 800, 480); } }, false);
+     eventsource.addEventListener("clear", function(event) {  if (event.origin == eventsourceOrigin) { ctxt.clearRect(0, 0, 800, 480); } }, false);
 </script>
 
 </body></html>
