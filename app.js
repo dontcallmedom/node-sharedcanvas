@@ -10,7 +10,7 @@ var queueStart = 0;
 app.configure(function(){
   emitter.setMaxListeners(0);
   app.use(express.logger());
-  app.set('port', 3000);
+  app.set('port', process.env.PORT || 3000);
   app.use(express.bodyParser());
   app.use(express.static(__dirname + '/public', { maxAge: 86400}));
 });
@@ -18,7 +18,7 @@ app.configure(function(){
 // Run on port 80 when in production mode
 app.configure('production', function(){
   app.use(express.errorHandler()); 
-  app.set('port', 80);
+  app.set('port', process.env.PORT || 80);
 });
 
 // receives draw events
