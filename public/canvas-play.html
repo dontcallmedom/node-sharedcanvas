@@ -12,15 +12,20 @@
      var canvas = document.getElementById('example'),
      ctxt = canvas.getContext("2d");
      var eventsource=  new EventSource('/stream');
+     // in our case, the event source origin is the same as the document
+     // Note that this is not always true, when e.g. used with CORS
+     var eventsourceOrigin = document.location.protocol + '//' + document.location.hostname + (document.location.port ?  ':'  + document.location.port : '');
      eventsource.onmessage = function(event) {
+       if (event.origin == eventsourceOrigin) {
        ctxt.beginPath();
        pathData = JSON.parse(event.data);
      ctxt.moveTo(pathData.from.x, pathData.from.y);
      ctxt.lineTo(pathData.to.x, pathData.to.y);
      ctxt.stroke();
      ctxt.closePath();
+}
      };
-     eventsource.addEventListener("clear", function() {  ctxt.clearRect(0, 0, 800, 480);}, false);
+     eventsource.addEventListener("clear", function(event) {  if (event.origin == eventsourceOrigin) { ctxt.clearRect(0, 0, 800, 480); } }, false);
 </script>
 
 </body></html>

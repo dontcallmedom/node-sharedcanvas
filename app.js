@@ -4,6 +4,9 @@ var emitter = new EventEmitter();
 var app = express.createServer();
 var fs = require('fs');
 
+var eventQueue = [];
+var queueStart = 0;
+
 app.configure(function(){
   emitter.setMaxListeners(0);
   app.use(express.logger());
@@ -20,12 +23,14 @@ app.configure('production', function(){
 
 // receives draw events
 app.post('/draw', function(req, res){
-    emitter.emit("path", req.body.from, req.body.to);
+    eventQueue.push({from: req.body.from, to: req.body.to});
+    emitter.emit("path", req.body.from, req.body.to, eventQueue.length);
     res.end();
 });
 
 // receives clear signal
 app.post('/clear', function(req, res){
+    queueStart = eventQueue.length;
     emitter.emit("clear");
     res.end();
 });
@@ -42,11 +47,20 @@ app.get('/stream', function(req, res) {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
     res.writeHead(200);
-    emitter.on("path", function(from, to) {
-	res.write("data: " + JSON.stringify({'from': from, 'to': to})+ "\n\n");
+    if (req.headers["last-event-id"]) {
+	console.log("Last-Event-ID: " + req.headers["last-event-id"]);
+	for(var i=Math.max(queueStart,req.headers["last-event-id"]) ; i<eventQueue.length;i++) {
+	    res.write("data: " + JSON.stringify({'from': eventQueue[i].from, 'to': eventQueue[i].to}) + "\n");
+	    res.write("id:" + i + "\n\n");
+	}
+    }
+    emitter.on("path", function(from, to, id) {
+	res.write("data: " + JSON.stringify({'from': from, 'to': to})+ "\n");
+	res.write("id: " + id + "\n\n");
     });
-    emitter.on("clear", function(from, to) {
+    emitter.on("clear", function() {
 	res.write("event: clear\n");
+	res.write("id: \n");
 	res.write("data: \n\n");
     });
 });
