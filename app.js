@@ -54,6 +54,9 @@ app.get('/stream', function(req, res) {
 	    res.write("id:" + i + "\n\n");
 	}
     }
+    // Heroku requires activity to avoid request timeout
+    setInterval(function() { res.write(":\n"); }, 30);
+
     emitter.on("path", function(from, to, id) {
 	res.write("data: " + JSON.stringify({'from': from, 'to': to})+ "\n");
 	res.write("id: " + id + "\n\n");
