@@ -1,13 +1,31 @@
 <!doctype html>
 <html>
-<head><title>Shared Canvas Drawer</title>
+<head><title>Remote Whiteboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 </head>
 <body>
+<h1>Remote whiteboard</h1>
+<h2>Introduction</h2>
+
+<p>This demo shows how to use a device with a touchscreen to “draw” on the screen of another device, using only off-the-shelf Web technologies.</p>
+
+<h2>Instructions</h2>
 <ul>
-<li><a href="canvas-draw.html">Draw here</a> (requires support for touch events)</li>
-<li><a href="canvas-play.html">Watch here</a></li>
+<li>Load the <a href="canvas-play.html">whiteboard</a> on a  device, typically a regular computer browser</li>
+<li>Load the <a href="canvas-draw.html">whiteboard writer</a> on a device with a touch screen</li>
+<li>Draw on the  the second device and watch your drawing appear on the first screen</li>
 </ul>
-<address><a href="https://github.com/dontcallmedom/node-sharedcanvas">sharedcanvas on github</a></address>
+
+<h2>Under the hood</h2>
+
+<p>The drawing on the second device are captured using <a href="http://www.w3.org/TR/touch-events/">Touch Events</a>, sent to a proxy server built using <a href="http://nodejs.org/">node.js</a>, and then dispatched to the first device via <a href="http://dev.w3.org/html5/eventsource/">Server-Sent events</a>.</p>
+
+<p>The drawings are rendered on a HTML5’s <a href="http://www.w3.org/TR/2dcontext/"><code>canvas</code></a> element.</p>
+
+<p>The <a href="http://www.html5rocks.com/en/mobile/touch.html">touch-enabled <code>canvas</code></a> was developed by <a href="http://miketaylr.com/">Mike Taylr</a>, <a href="http://timbranyen.com/">Tim Branyen</a>, <a href="http://paulirish.com/demo/multi">Paul Irish</a> and <a href="http://www.html5rocks.com/profiles/#!/smus">Boris Smus</a>.</p>
+
+<p>The code for this demonstration is available on <a href="https://github.com/dontcallmedom/node-sharedcanvas">github</a>.</p>
+
+<address><a href="http://www.w3.org/People/Dom/">Dominique Hazael-Massieux</a> (<a href="http://twitter.com/dontcallmedom">@dontcallmedom</a>)</address>
 </body>
 </html>
