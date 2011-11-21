@@ -37,7 +37,7 @@
                var self = {
                    //bind click events
                    init: function() {
-           $.post('/connect', {ua': navigator.userAgent};
+           $.post('/connect', {'ua': navigator.userAgent});
                        canvas.addEventListener('touchstart', self.preDraw, false);
                        canvas.addEventListener('touchmove', self.draw, false);
 	               return self;
