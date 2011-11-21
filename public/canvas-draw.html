@@ -37,7 +37,7 @@
                var self = {
                    //bind click events
                    init: function() {
-                       
+           $.post('/connect', {ua': navigator.userAgent};
                        canvas.addEventListener('touchstart', self.preDraw, false);
                        canvas.addEventListener('touchmove', self.draw, false);
 	               return self;
@@ -52,7 +52,7 @@
                          
                            lines[id] = { x     : this.pageX - offset.left, 
                                          y     : this.pageY - offset.top, 
-                                         color : options.color || ["red", "green", "yellow", "blue", "magenta", "orangered"][Math.floor(Math.random() * 6)] 
+                                         color : "black";
                                       };
                        });
 
@@ -106,7 +106,7 @@
 	     var x1 = 0, y1 = 0, z1 = 0, x2 = null, y2 = null, z2 = null;
 
 	     // Listen to motion events and update the position 
-	     window.addEventListener('devicemotion', function (e) {
+	     /* window.addEventListener('devicemotion', function (e) {
 					x1 = e.accelerationIncludingGravity.x;
 					y1 = e.accelerationIncludingGravity.y;
 					z1 = e.accelerationIncludingGravity.z;
@@ -126,8 +126,8 @@ super_awesome_multitouch_drawing_canvas_thingy.clear();
 					x2 = x1;
 					y2 = y1;
 					z2 = z1;
-				}, 150);
-	   }	
+				}, 150);*/
+	   }
 document.getElementById('clear').addEventListener('click', function() {
 super_awesome_multitouch_drawing_canvas_thingy.clear();
 return true;
