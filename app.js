@@ -21,6 +21,14 @@ app.configure('production', function(){
   app.set('port', process.env.PORT || 80);
 });
 
+// receives connect events
+app.post('/connect', function(req, res){
+    eventQueue.push({ua: req.body.ua});
+    emitter.emit("connect", req.body.ua);
+    res.end();
+});
+
+
 // receives draw events
 app.post('/draw', function(req, res){
     eventQueue.push({from: req.body.from, to: req.body.to});
@@ -66,6 +74,11 @@ app.get('/stream', function(req, res) {
 	res.write("id: \n");
 	res.write("data: \n\n");
     });
+    emitter.on("connect", function(ua) {
+	res.write("event: connect\n");
+	res.write("data: " + JSON.stringify({'ua': ua})+ "\n");
+    });
+
 });
 
 app.listen(app.set('port'));
