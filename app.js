@@ -10,7 +10,7 @@ var queueStart = 0;
 app.configure(function(){
   emitter.setMaxListeners(0);
   app.use(express.logger());
-  app.set('port', 3000);
+  app.set('port', process.env.PORT || 3000);
   app.use(express.bodyParser());
   app.use(express.static(__dirname + '/public', { maxAge: 86400}));
 });
@@ -18,8 +18,16 @@ app.configure(function(){
 // Run on port 80 when in production mode
 app.configure('production', function(){
   app.use(express.errorHandler()); 
-  app.set('port', 80);
+  app.set('port', process.env.PORT || 80);
 });
+
+// receives connect events
+app.post('/connect', function(req, res){
+    eventQueue.push({ua: req.body.ua});
+    emitter.emit("connect", req.body.ua);
+    res.end();
+});
+
 
 // receives draw events
 app.post('/draw', function(req, res){
@@ -54,6 +62,9 @@ app.get('/stream', function(req, res) {
 	    res.write("id:" + i + "\n\n");
 	}
     }
+    // Heroku requires activity to avoid request timeout
+    setInterval(function() { res.write(":\n"); }, 30);
+
     emitter.on("path", function(from, to, id) {
 	res.write("data: " + JSON.stringify({'from': from, 'to': to})+ "\n");
 	res.write("id: " + id + "\n\n");
@@ -63,6 +74,11 @@ app.get('/stream', function(req, res) {
 	res.write("id: \n");
 	res.write("data: \n\n");
     });
+    emitter.on("connect", function(ua) {
+	res.write("event: connect\n");
+	res.write("data: " + JSON.stringify({'ua': ua})+ "\n");
+    });
+
 });
 
 app.listen(app.set('port'));
