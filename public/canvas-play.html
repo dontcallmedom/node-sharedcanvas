@@ -1,13 +1,9 @@
 <!doctype html>
 <html>
-<head><title>Remote whiteboard</title>
-<link rel="stylesheet" href="http://www.w3.org/2005/10/w3cdoc.css"/>
+<head><title>Shared Canvas Player</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 </head>
 <body>
-<h1>Remote whiteboard</h1>
-<h2 lang="fr">Dessine-moi un mouton</h2>
-<p id="id"></p>
 <canvas id="example" width="800" height="480"></canvas>
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
    
@@ -30,15 +26,6 @@
 }
      };
      eventsource.addEventListener("clear", function(event) {  if (event.origin == eventsourceOrigin) { ctxt.clearRect(0, 0, 800, 480); } }, false);
-
-     eventsource.addEventListener("connected", function(event) {
-     if (event.origin == eventsourceOrigin) { 
-     connectedData = JSON.parse(event.data);
-     var connected = document.getElementById("id");
-     connected.appendChild(document.createTextNode("Connected with " + connectedData + ".");
-     connected.appendChild(document.createElement("br");
-
-     } }, false);
 </script>
 
 </body></html>
