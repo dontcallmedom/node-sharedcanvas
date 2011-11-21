@@ -34,7 +34,9 @@
      eventsource.addEventListener("connected", function(event) {
      if (event.origin == eventsourceOrigin) { 
      connectedData = JSON.parse(event.data);
-     var document.getElementById("id").appendChild(document.createTextNode("Connected with " + connectedData);
+     var connected = document.getElementById("id");
+     connected.appendChild(document.createTextNode("Connected with " + connectedData + ".");
+     connected.appendChild(document.createElement("br");
 
      } }, false);
 </script>
