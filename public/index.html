@@ -16,6 +16,23 @@
 <li>Draw on the  the second device and watch your drawing appear on the first screen</li>
 </ul>
 
+<p>Here is what running this demo looks like, in video:</p>
+
+    <div id='video'>
+      <video controls>
+	<source src="http://media.w3.org/2011/11/remote-whiteboard-web.mp4" type="video/mp4">
+	<source src="http://media.w3.org/2011/11/remote-whiteboard-web.webm" type="video/webm">
+
+	<text lang='en' type="application/ttaf+xml" src="http://www.w3.org/2011/11/remote-whiteboard-demo-video.xml"></text>
+	<div style='width: 640px; height: 360px;'>
+	  <p>No Video Support. Transcript of the video:</p>
+	  <p>In this demonstration, I use the the touch capabilities of the browser on my mobile phone to draw an image that appears at the same time in the Web browser on my desktop computer.</p>
+	  <p>This demo was built by Dominique Hazael-Massieux, only with W3C Web technologies. Find out more at <a href="http://github.com/dontcallmedom/node-sharedcanvas/">github.com/dontcallmedom</a>.</p>
+	  <p><strong>Note:</strong> If your browser does not support HTML5, you may still be able to view the video directly: <a href="http://media.w3.org/2011/11/remote-whiteboard-web.mp4">mp4 version</a>, <a href="http://media.w3.org/2011/11/remote-whiteboard-web.webm">webm version</a>.</p>
+	</div>
+      </video>
+
+
 <h2>Under the hood</h2>
 
 <p>The drawing on the second device are captured using <a href="http://www.w3.org/TR/touch-events/">Touch Events</a>, sent to a proxy server built using <a href="http://nodejs.org/">node.js</a>, and then dispatched to the first device via <a href="http://dev.w3.org/html5/eventsource/">Server-Sent events</a>.</p>
