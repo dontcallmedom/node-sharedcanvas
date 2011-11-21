@@ -76,7 +76,7 @@ app.get('/stream', function(req, res) {
     });
     emitter.on("connect", function(ua) {
 	res.write("event: connect\n");
-	res.write("data: " + JSON.stringify({'ua': ua})+ "\n");
+	res.write("data: " + JSON.stringify({'ua': ua})+ "\n\n");
     });
 
 });

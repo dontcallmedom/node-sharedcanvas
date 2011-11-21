@@ -39,12 +39,16 @@
                var self = {
                    //bind click events
                    init: function() {
-           $.post('/connect', {'ua': navigator.userAgent});
-                       canvas.addEventListener('touchstart', self.preDraw, false);
-                       canvas.addEventListener('touchmove', self.draw, false);
-	               return self;
-                       
-                       
+                    $.post('/connect', {'ua': navigator.userAgent});
+                    canvas.addEventListener('touchstart', self.preDraw, false);
+                    canvas.addEventListener('touchmove', self.draw, false);
+
+                    // Handle mouse events
+                    canvas.addEventListener('mousedown', self.preMouseDraw, false);
+                    canvas.addEventListener('mousemove', self.mouseDraw, false)
+                    canvas.addEventListener('mouseup', self.postMouseDraw, false);
+
+                    return self;
                    },
 
                    preDraw: function(event) {
@@ -75,6 +79,35 @@
                        });
 
                        event.preventDefault();
+                   },
+
+                   preMouseDraw: function (event) {
+                       lines['mouse'] = {
+                           x: event.clientX - offset.left,
+                           y: event.clientY - offset.top,
+                           color: "black"
+                       };
+                       event.preventDefault();
+                   },
+
+                   mouseDraw: function (event) {
+                       var id = 'mouse';
+                       if (lines[id]) {
+                           moveX = event.clientX - offset.left - lines[id].x;
+                           moveY = event.clientY - offset.top - lines[id].y;
+                           var ret = self.move('mouse', moveX, moveY);
+                           lines[id].x = ret.x;
+                           lines[id].y = ret.y;
+                           event.preventDefault();
+                       }
+                   },
+
+                   postMouseDraw: function (event) {
+                       var id = 'mouse';
+                       if (lines[id]) {
+                           lines[id] = null;
+                           event.preventDefault();
+                       }
                    },
 
                    move: function(i, changeX, changeY) {
